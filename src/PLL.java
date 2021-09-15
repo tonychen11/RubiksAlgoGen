@@ -1,5 +1,8 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.*;
 import java.util.Scanner; 
 import java.util.Random;
 
@@ -75,8 +78,8 @@ public class PLL {
 		
         List<String> list = Arrays.asList(pllName);
 
-		// creating a hash table 
-        Hashtable<String, String[]> h = new Hashtable<>();
+		// Hashmap to store the pll names and their respective algorithms
+        HashMap<String, String[]> h = new HashMap<>();
         
 		for (int i = 0; i < pll.length; i++) {
 			String currentPll[] = splitPLL(pll[i]);
@@ -90,9 +93,8 @@ public class PLL {
 		Scanner scan = new Scanner(System.in);
 
 		while(practiceTool) {
-			System.out.println("Welcome to PLL practice tool."
-				+ "\nWould you like to practice a specific PLL"
-				+ " or all PLLs?"
+			System.out.println("Welcome to PLL practice tool.\n"
+				+ "\nWould you like to practice a specific PLL or all PLLs?\n"
 				+ "\nEnter 's' for specific and 'a' for all"
 				+ "\nEnter 'x' to exit the practice tool");
 			
@@ -122,7 +124,7 @@ public class PLL {
 			        	for (String s3:h.get(s2.toUpperCase())) {
 					        System.out.print(s3 + " ");
 						}
-						System.out.println("\nEnter 'new' to practice another PLL"
+						System.out.println("\n\nEnter 'new' to practice another PLL"
 								+ "\nEnter any key to return to the home screen");
 						String s4 = scan.next();
 
@@ -143,15 +145,28 @@ public class PLL {
 			else if (s.equals("a")) {
 				boolean all = true;
 				Random rand = new Random();
-
+				int numPll = 0; //makes sure all 21 plls are cycled through
+				List<Integer> nums = new ArrayList<>();	
+				for(int i = 1; i <= 21; i++) {
+					nums.add(i);
+				}
+				Collections.shuffle(nums);
+				
 				while (all) {
+					//if all 21 plls gone through, reshuffle list 
+					if(numPll == 21) {
+						Collections.shuffle(nums);
+						numPll = 0;
+					}
 					System.out.println("\nPLL algorithms will be randomly generated for you to practice\n");
-					String randInt = pllName[rand.nextInt(21)];
-					System.out.println("Algorithm: " + randInt);
+					//String randInt = pllName[rand.nextInt(21)];
+					String randInt = pllName[nums.get(numPll) - 1]; //index 0 to 20 
+					numPll += 1;
+					System.out.println("Algorithm: " + randInt + "\n");
 					for (String s5:h.get(randInt)) {
 				        System.out.print(s5 + " ");
 					}
-					System.out.println("\nEnter any key to practice the next PLL"
+					System.out.println("\n\nEnter any key to practice the next PLL"
 							+ "\nEnter 'exit' to return to the home screen");
 					
 					String s6 = scan.next();
