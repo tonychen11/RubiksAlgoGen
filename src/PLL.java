@@ -3,8 +3,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner; 
 import java.util.Random;
+import java.util.Scanner; 
 
 public class PLL {
 	public static String[] splitPLL(String pll) {
@@ -92,10 +92,11 @@ public class PLL {
 		boolean practiceTool = true;
 		Scanner scan = new Scanner(System.in);
 
+		System.out.println("Welcome to PLL practice tool.\n"
+				+ "\nWould you like to practice a specific PLL or all PLLs?\n");
+		
 		while(practiceTool) {
-			System.out.println("Welcome to PLL practice tool.\n"
-				+ "\nWould you like to practice a specific PLL or all PLLs?\n"
-				+ "\nEnter 's' for specific and 'a' for all"
+			System.out.println("Enter 's' for specific and 'a' for all"
 				+ "\nEnter 'x' to exit the practice tool");
 			
 			String s = scan.next();
@@ -138,8 +139,7 @@ public class PLL {
 						}
 			        }	
 			        else
-						System.out.println("");
-			        	System.out.println("This PLL does not exist, pls re-enter a PLL\n");
+			        	System.out.println("\nThis PLL does not exist, pls re-enter a PLL\n");
 				}
 			}
 			else if (s.equals("a")) {
@@ -154,7 +154,7 @@ public class PLL {
 				
 				while (all) {
 					//if all 21 plls gone through, reshuffle list 
-					if(numPll == 21) {
+					if(numPll == 21) {	
 						Collections.shuffle(nums);
 						numPll = 0;
 					}
@@ -184,9 +184,6 @@ public class PLL {
 			
 			else if (s.equals("x"))
 				break;
-			
-			else
-				System.out.println("Please enter 's' for specific or 'a' for all\n");
 		}
   
 		scan.close();
