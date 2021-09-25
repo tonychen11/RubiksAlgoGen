@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<div id="mainFrameOne">
+	<p id = "startMessage">
+	Welcome to PLL practice tool. <br><br>
+	Would you like to practice a specific PLL or all PLLs?  <br><br>
+	Enter 's' for specific and 'a' for all <br>
+	</p>
+	<input type="text" id="stdin"/> 
+	<span id="errorMode"></span>
+	<p id="credits"></p>
+	<button onClick="JavaScript:selectMode()">Submit</button>
+</div>
+
+<div id="specificFrame" style="display:none;">
+	<p>Choose 1 out of the 21 PLLs to practice. <br><br>
+		 A1, A2, U1, U2, H, T, J1, J2, R1, R2, V, G1, G2, G3, G4, F, Z, Y, N1, N2, E <br><br>
+	   Type your selection:
+	</p>
+	<input type="text" id="stdinSpecific"/> 
+	<span id="errorPLL"></span>
+	<br><br><button onClick="JavaScript:generateSpecificAlgorithm()">Submit</button>
+</div>
+
+<div id="specificFrameFollowUp" style="display:none;">
+	<p id="output"></p>
+	<p>Enter 'new' to practice another PLL <br>
+     Enter any key to return to the home screen
+	</p>
+	<input type="text" id="stdinSpecificFollowUp"/> 
+	<br><br><button onClick="JavaScript:nextActionSpecific()">Submit</button>
+</div>
+
+<div id="allFrame" style="display:none;">
+	<p>PLL algorithms will be randomly generated for you to practice <br>
+	</p>
+	<p id="output2"></p>
+	<p>Enter any key to practice the next PLL <br>
+	   Enter 'exit' to return to the home screen
+	</p>
+  <input type="text" id="stdinAll"/> 
+  <br><br><button onClick="JavaScript:nextActionAll()">Submit</button>
+</div>
+
+<script>
+function selectMode() {	
+  var stdin = document.getElementById("stdin");
+  var mainFrameOne = document.getElementById("mainFrameOne"); 
+  var mainFrameTwo = document.getElementById("mainFrameTwo");
+
+	//Clear error message
+	if(document.getElementById("errorMode").innerHTML != ""){
+		document.getElementById("errorMode").innerHTML = "";  	
+	}
+  <!-- If s is selected -->
+  if(stdin.value == 's' || stdin.value == 'S'){	
+		stdin.value = "";
+    mainFrameOne.style.display = "none"; 
+    specificFrame.style.display = "block"; 
+  }
+  
+  <!-- If a is selected -->
+  else if(stdin.value == 'a' || stdin.value == 'A'){
+		stdin.value = "";
+    mainFrameOne.style.display = "none"; 
+    allFrame.style.display = "block"; 
+		generateAllAlgorithm();
+  }
+	
+	//Invalid mode 
+	else{
+		stdin.value = "";
+	  document.getElementById("errorMode").innerHTML = "That is not a valid mode";  
+	}
+}
+
+function generateSpecificAlgorithm() {
+  var stdin = document.getElementById("stdinSpecific");
+  var output = document.getElementById("output");
+	var errorMsg = document.getElementById("errorPLL");
+	errorMsg.innerHTML = "Generating..."; 	
+
+  var obj = {
+		clientId: "45e122d1b04aa0d2535611c41a1aa67f",
+	  clientSecret: "aa095a093953a4737ca7fbd78aca37ed8fe137fb6de86321770e9dcb93488e44",
+		script: "import java.util.Arrays;\r\nimport java.util.HashMap;\r\nimport java.util.List;\r\nimport java.util.Scanner;\r\n\r\npublic class PLLSpecific {\r\n\tpublic static String[] splitPLL(String pll) {\r\n\t\tString split[] = pll.split(\"\\\\s+\");\r\n\t\treturn split;\r\n\t}\r\n\t\r\n\tpublic static void removeBrackets(String[] pll) {\r\n\t\tfor (int i = 0; i < pll.length; i++) {\r\n\t\t\t//https://stackoverflow.com/questions/25852961/how-to-remove-brackets-character-in-string-java\r\n\t\t\tpll[i] = pll[i].replaceAll(\"[\\\\[\\\\](){}]\", \"\");\r\n\t\t}\t\t\r\n\t}\r\n\t\r\n\tpublic static void invertMove(String[] pll) {\r\n\t\tfor (int i = 0; i < pll.length; i++) {\r\n\t\t\tif (pll[i].length() == 2) {\r\n\t\t\t\tif (pll[i].charAt(1) == ('\\''))\r\n\t\t\t\t\tpll[i] = pll[i].substring(0,1);\r\n\t\t\t}\r\n\t\t\telse if (pll[i].length() == 3) {\r\n\t\t\t\tpll[i] = pll[i].substring(0,2);\r\n\t\t\t}\r\n\t\t\telse {\r\n\t\t\t\tpll[i] += '\\'';\t\t\t\t\r\n\t\t\t}\t\t\t\t\t\t\r\n\t\t}\r\n\t}\r\n\t\r\n\tpublic static void invertPLL(String[] pll) {\r\n\t\tString temp;\r\n\t\tfor (int i = 0; i < pll.length/2; i++) {\r\n\t\t\ttemp = pll[i];\r\n\t\t\tpll[i] = pll[(pll.length)-i-1];\r\n\t\t\tpll[(pll.length)-i-1] = temp;\r\n\t\t}\t\r\n\t}\r\n\tpublic static void main(String[] args) {\r\n\t\tString[] pll = {\"[(R' U R') D2] [(R U' R') D2] R2\",\r\n\t\t\t\t\"[(R U' R) D2] [(R' U R) D2] R2\",\r\n\t\t\t\t\"R2 U [R U R' U'] (R' U') (R' U R')\",\r\n\t\t\t\t\"[R U'] [R U] [R U] [R U'] R' U' R2\",\r\n\t\t\t\t\"M2 U M2 U2 M2 U M2\",\r\n\t\t\t\t\"[R U R' U'] [R' F] [R2 U' R'] U' [R U R' F']\",\r\n\t\t\t\t\"[R' U L'] [U2 R U' R' U2] [R L U']\",\r\n\t\t\t\t\"[R U R' F'] {[R U R' U'] [R' F] [R2 U' R'] U'}\",\r\n\t\t\t\t\"[L U2' L' U2'] [L F'] [L' U' L U] [L F] L2' U\",\r\n\t\t\t\t\"[R' U2 R U2] [R' F] [R U R' U'] [R' F'] R2 U'\",\r\n\t\t\t\t\"[R' U R' d'] [R' F'] [R2 U' R' U] [R' F R F]\",\r\n\t\t\t\t\"R2 u R' U R' U' R u' R2 [y' R' U R]\",\r\n\t\t\t\t\"[R' U' R] y R2 u R' U R U' R u' R2\",\r\n\t\t\t\t\"R2 u' R U' R U R' u R2 [y R U' R']\",\r\n\t\t\t\t\"[R U R'] y' R2 u' R U' R' U R' u R2\",\r\n\t\t\t\t\"[R' U2 R' d'] [R' F'] [R2 U' R' U] [R' F R U' F]\",\r\n\t\t\t\t\"M2 U M2 U M' U2 M2 U2 M' U2\",\r\n\t\t\t\t\"F R U' R' U' [R U R' F'] {[R U R' U'] [R' F R F']}\",\r\n\t\t\t\t\"{(L U' R) U2 (L' U R')} {(L U' R) U2 (L' U R')} U\",\r\n\t\t\t\t\"{(R' U L') U2 (R U' L)} {(R' U L') U2 (R U' L)} U'\",\r\n\t\t\t\t\"(R U' R') D (R U R') u2 (R' U R) D (R' U' R)\"};\r\n\r\n\t\tString[] pllName = {\"A1\", \"A2\", \"U1\", \"U2\", \"H\", \"T\", \"J1\", \"J2\", \"R1\", \"R2\", \r\n\t\t\t\t\t\t\t\"V\", \"G1\", \"G2\", \"G3\", \"G4\", \"F\", \"Z\", \"Y\", \"N1\", \"N2\", \"E\"};\r\n\t\t\r\n\t\tList<String> list = Arrays.asList(pllName);\r\n\t\t\r\n\t\t// Hashmap to store the pll names and their respective algorithms\r\n\t\tHashMap<String, String[]> h = new HashMap<>();\r\n\t\t\r\n\t\tfor (int i = 0; i < pll.length; i++) {\r\n\t\t\tString currentPll[] = splitPLL(pll[i]);\r\n\t\t\tremoveBrackets(currentPll);\r\n\t\t\tinvertMove(currentPll);\r\n\t\t\tinvertPLL(currentPll);\r\n\t\t\th.put(pllName[i], currentPll);\r\n\t\t} \r\n\t\t\r\n\t\tScanner scan = new Scanner(System.in);\r\n\t\tString s = scan.next();\r\n\t\t\r\n\t\tif (list.contains(s.toUpperCase())) {\r\n\t\t\tSystem.out.println(\"\");\r\n        \tfor (String letter:h.get(s.toUpperCase())) {\r\n\t\t        System.out.print(letter + \" \");\r\n\t\t\t}\r\n        }\t\r\n\t\t\r\n\t\tscan.close();\r\n\t}\r\n}",
+		language: "java",
+		versionIndex: "0",
+		stdin: stdin.value	
+	};
+
+  var jsonStr = JSON.stringify(obj);
+  console.log(jsonStr);
+		
+  const proxyurl = "https://cors-anywhere.herokuapp.com/";
+  const url = "https://api.jdoodle.com/v1/execute";
+  fetch(proxyurl + url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: jsonStr
+  })
+  .then(response => response.json())
+  .then(data => {
+    var outputStr = data.output;
+		
+		//PLL exists
+		if(outputStr != ""){
+			errorMsg.innerHTML = "";
+			output.innerHTML = stdin.value.toUpperCase() + " Inverse Permutation:<br><br>" + outputStr;
+			stdin.value = "";
+			specificFrame.style.display = "none"; 
+			specificFrameFollowUp.style.display = "block"; 
+		}
+		//PLL doesn't exist
+		else{
+			stdin.value = "";
+			errorMsg.innerHTML = "This PLL does not exist, please re-enter a PLL"; 	
+		}
+  })
+  .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
+}
+
+function nextActionSpecific() {
+	//Display algorithm
+	//Practice another PLL or return to the home screen
+	var stdin3 = document.getElementById("stdinSpecificFollowUp");
+	
+	if(stdin3.value == 'new'){
+		stdin3.value = "";
+		specificFrameFollowUp.style.display = "none"; 
+		specificFrame.style.display = "block"; 
+	}
+	else{
+		stdin3.value = "";
+		specificFrameFollowUp.style.display = "none"; 
+		mainFrameOne.style.display = "block";
+	}
+}
+
+function generateAllAlgorithm() {
+	//Generate random algorithm
+  var output = document.getElementById("output2");
+	output.innerHTML = "Generating..."; 	
+
+  var obj = {
+		clientId: "45e122d1b04aa0d2535611c41a1aa67f",
+	  clientSecret: "aa095a093953a4737ca7fbd78aca37ed8fe137fb6de86321770e9dcb93488e44",
+		script: "import java.util.ArrayList;\r\nimport java.util.Arrays;\r\nimport java.util.Collections;\r\nimport java.util.HashMap;\r\nimport java.util.List;\r\n\r\npublic class PLLRandom {\r\n\tpublic static String[] splitPLL(String pll) {\r\n\t\tString split[] = pll.split(\"\\\\s+\");\r\n\t\treturn split;\r\n\t}\r\n\t\r\n\tpublic static void removeBrackets(String[] pll) {\r\n\t\tfor (int i = 0; i < pll.length; i++) {\r\n\t\t\t//https://stackoverflow.com/questions/25852961/how-to-remove-brackets-character-in-string-java\r\n\t\t\tpll[i] = pll[i].replaceAll(\"[\\\\[\\\\](){}]\", \"\");\r\n\t\t}\t\t\r\n\t}\r\n\t\r\n\tpublic static void invertMove(String[] pll) {\r\n\t\tfor (int i = 0; i < pll.length; i++) {\r\n\t\t\tif (pll[i].length() == 2) {\r\n\t\t\t\tif (pll[i].charAt(1) == ('\\''))\r\n\t\t\t\t\tpll[i] = pll[i].substring(0,1);\r\n\t\t\t}\r\n\t\t\telse if (pll[i].length() == 3) {\r\n\t\t\t\tpll[i] = pll[i].substring(0,2);\r\n\t\t\t}\r\n\t\t\telse {\r\n\t\t\t\tpll[i] += '\\'';\t\t\t\t\r\n\t\t\t}\t\t\t\t\t\t\r\n\t\t}\r\n\t}\r\n\t\r\n\tpublic static void invertPLL(String[] pll) {\r\n\t\tString temp;\r\n\t\tfor (int i = 0; i < pll.length/2; i++) {\r\n\t\t\ttemp = pll[i];\r\n\t\t\tpll[i] = pll[(pll.length)-i-1];\r\n\t\t\tpll[(pll.length)-i-1] = temp;\r\n\t\t}\t\r\n\t}\r\n\t\r\n\tpublic static void main(String[] args) {\r\n\t\tString[] pll = {\"[(R' U R') D2] [(R U' R') D2] R2\",\r\n\t\t\t\t\"[(R U' R) D2] [(R' U R) D2] R2\",\r\n\t\t\t\t\"R2 U [R U R' U'] (R' U') (R' U R')\",\r\n\t\t\t\t\"[R U'] [R U] [R U] [R U'] R' U' R2\",\r\n\t\t\t\t\"M2 U M2 U2 M2 U M2\",\r\n\t\t\t\t\"[R U R' U'] [R' F] [R2 U' R'] U' [R U R' F']\",\r\n\t\t\t\t\"[R' U L'] [U2 R U' R' U2] [R L U']\",\r\n\t\t\t\t\"[R U R' F'] {[R U R' U'] [R' F] [R2 U' R'] U'}\",\r\n\t\t\t\t\"[L U2' L' U2'] [L F'] [L' U' L U] [L F] L2' U\",\r\n\t\t\t\t\"[R' U2 R U2] [R' F] [R U R' U'] [R' F'] R2 U'\",\r\n\t\t\t\t\"[R' U R' d'] [R' F'] [R2 U' R' U] [R' F R F]\",\r\n\t\t\t\t\"R2 u R' U R' U' R u' R2 [y' R' U R]\",\r\n\t\t\t\t\"[R' U' R] y R2 u R' U R U' R u' R2\",\r\n\t\t\t\t\"R2 u' R U' R U R' u R2 [y R U' R']\",\r\n\t\t\t\t\"[R U R'] y' R2 u' R U' R' U R' u R2\",\r\n\t\t\t\t\"[R' U2 R' d'] [R' F'] [R2 U' R' U] [R' F R U' F]\",\r\n\t\t\t\t\"M2 U M2 U M' U2 M2 U2 M' U2\",\r\n\t\t\t\t\"F R U' R' U' [R U R' F'] {[R U R' U'] [R' F R F']}\",\r\n\t\t\t\t\"{(L U' R) U2 (L' U R')} {(L U' R) U2 (L' U R')} U\",\r\n\t\t\t\t\"{(R' U L') U2 (R U' L)} {(R' U L') U2 (R U' L)} U'\",\r\n\t\t\t\t\"(R U' R') D (R U R') u2 (R' U R) D (R' U' R)\"};\r\n\r\n\t\tString[] pllName = {\"A1\", \"A2\", \"U1\", \"U2\", \"H\", \"T\", \"J1\", \"J2\", \"R1\", \"R2\", \r\n\t\t\t\t\t\t\t\"V\", \"G1\", \"G2\", \"G3\", \"G4\", \"F\", \"Z\", \"Y\", \"N1\", \"N2\", \"E\"};\r\n\t\t\r\n\t\tList<String> list = Arrays.asList(pllName);\r\n\t\t\r\n\t\t// Hashmap to store the pll names and their respective algorithms\r\n\t\tHashMap<String, String[]> h = new HashMap<>();\r\n\t\t\r\n\t\tfor (int i = 0; i < pll.length; i++) {\r\n\t\t\tString currentPll[] = splitPLL(pll[i]);\r\n\t\t\tremoveBrackets(currentPll);\r\n\t\t\tinvertMove(currentPll);\r\n\t\t\tinvertPLL(currentPll);\r\n\t\t\th.put(pllName[i], currentPll);\r\n\t\t}\r\n\r\n\t\tList<Integer> nums = new ArrayList<>();\t\r\n\t\tfor(int i = 1; i <= 21; i++) {\r\n\t\t\tnums.add(i);\r\n\t\t}\r\n\t\tCollections.shuffle(nums);\r\n\t\tString randInt = pllName[nums.get(0)-1]; //index 0 to 20 \r\n\t\tSystem.out.println(randInt + \" Inverse Permutation:\");\r\n\t\tfor (String letter : h.get(randInt)) {\r\n\t        System.out.print(letter + \" \");\r\n\t\t}\r\n\t}\r\n}",
+		language: "java",
+		versionIndex: "0"
+	};
+
+  var jsonStr = JSON.stringify(obj);
+  console.log(jsonStr);
+		
+  const proxyurl = "https://cors-anywhere.herokuapp.com/";
+  const url = "https://api.jdoodle.com/v1/execute";
+  fetch(proxyurl + url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: jsonStr
+  })
+  .then(response => response.json())
+  .then(data => {
+    var outputStr = data.output;
+		var formattedOutput = outputStr.replace(/(?:\r\n|\r|\n)/g, '<br><br>');
+		output.innerHTML = "";
+		//Display PLL
+		output.innerHTML = formattedOutput;
+  })
+  .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
+}
+
+function nextActionAll() {
+	//Display algorithm
+	//Practice another PLL or return to the home screen
+	var stdin = document.getElementById("stdinAll");
+	var output = document.getElementById("output2");
+
+	if(stdin.value == 'exit'){
+		stdin.value = "";
+		allFrame.style.display = "none"; 
+		mainFrameOne.style.display = "block"; 
+		}	
+	else{
+		stdin.value = "";
+		output.innerHTML = "";
+		generateAllAlgorithm();
+	}
+}
+</script>
+
+</html>
