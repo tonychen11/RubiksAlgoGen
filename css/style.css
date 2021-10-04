@@ -1,0 +1,18 @@
+#mainFrameOne{
+  text-align: center;
+}
+
+#specificFrame{
+	text-align: center;
+	display: none;
+}
+
+#specificFrameFollowUp{
+  text-align: center;
+	display: none;
+}
+
+#allFrame{
+  text-align: center;	
+	display: none;	
+}
