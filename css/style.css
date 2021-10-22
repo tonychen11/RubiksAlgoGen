@@ -1,18 +1,22 @@
 #mainFrameOne{
   text-align: center;
+	font-size: large;
 }
 
 #specificFrame{
 	text-align: center;
+	font-size: large;
 	display: none;
 }
 
 #specificFrameFollowUp{
   text-align: center;
+	font-size: large;
 	display: none;
 }
 
 #allFrame{
   text-align: center;	
+	font-size: large;
 	display: none;	
 }
