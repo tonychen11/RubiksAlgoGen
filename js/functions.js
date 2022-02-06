@@ -1,18 +1,27 @@
 //Allow user to press enter to submit
-document.body.addEventListener("keydown", function(event) {	
+document.getElementById("mainFrameOne").addEventListener("keydown", function(event) {	
   if(mainFrameOne.style.display != 'none' && event.key == 'Enter'){
 		selectMode();
 	}
-	else if(specificFrame.style.display != 'none' && event.key == 'Enter'){
+});
+
+document.getElementById("specificFrame").addEventListener("keydown", function(event) {	
+	if(specificFrame.style.display != 'none' && event.key == 'Enter'){
 		generateSpecificAlgorithm();
 	}
-	else if(specificFrameFollowUp.style.display != 'none' && event.key == 'Enter'){
+});
+
+document.getElementById("specificFrameFollowUp").addEventListener("keydown", function(event) {	
+	if(specificFrameFollowUp.style.display != 'none' && event.key == 'Enter'){
 		nextActionSpecific();
 	}
-	else if(allFrame.style.display != 'none' && event.key == 'Enter'){
+});
+
+document.getElementById("allFrame").addEventListener("keydown", function(event) {	
+	if(allFrame.style.display != 'none' && event.key == 'Enter'){
 		nextActionAll();
 	}
-}, true);
+});
 
 function selectMode() {	
 	//Clear error message before going to next page
