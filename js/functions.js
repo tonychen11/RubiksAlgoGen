@@ -70,7 +70,7 @@ function generateSpecificAlgorithm() {
 		var jsonStr = JSON.stringify(obj);
 		console.log(jsonStr);
 			
-		const proxyurl = "https://sleepy-thicket-31975.herokuapp.com/";
+		const proxyurl = "https://cors-anywhere-fpif.onrender.com/";
 		const url = "https://api.jdoodle.com/v1/execute";
 		fetch(proxyurl + url, {
 			method: 'POST',
@@ -133,7 +133,7 @@ function generateAllAlgorithm() {
   var jsonStr = JSON.stringify(obj);
   console.log(jsonStr);
 		
-  const proxyurl = "https://sleepy-thicket-31975.herokuapp.com/";
+  const proxyurl = "https://cors-anywhere-fpif.onrender.com/";
   const url = "https://api.jdoodle.com/v1/execute";
   fetch(proxyurl + url, {
     method: 'POST',
